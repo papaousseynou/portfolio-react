@@ -1,6 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Navbar() {
+
+    //Definition d'un state contenant l'id du button avec le focus
+    //ID 0 : Logo Portefolio -> Page d'acceuil
+    //ID 1 : Bouton Projets -> Page projet
+    //ID 2 : Bouton Competencs -> Page competences 
+    //ID 3 : Bouton Connexion -> Page d'authentification 
+
+
+    const [focusBtnId, setFocusBtnId] = useState(0)
+
+    //Definition d'une constante definissant les classename tailwind approprie selon si le boutton est focus ou pas
+    const focusedBtnStyle = "mr-5 p-3 border border-black-500 cursor-pointer bg-red-500 text-white "
+    const noFocusedBtnStyle = "mr-5 p-3 border border-black-500 cursor-pointer "
+
+
+    //Handler de capture des click sur les buttons du navbar
+    const btnClickHandler = (id)=>{
+        //MAJ de l'id du bouton ayant le focus
+        setFocusBtnId(id)
+
+
+        
+
+
+
+
+    }
+
   return (
 
         // barre de navigation : definis par deux elements 
@@ -14,7 +42,7 @@ export default function Navbar() {
     
                 {/* Le logo */}
 
-                <div className='flex flex-col items-center'>
+                <div className='flex flex-col items-center cursor-pointer' onClick={()=>{btnClickHandler(0)}}>
                     <span className='text-4xl'>P O R T F O L I O</span>
                     <div className='mt-1'><span className=' text-2xl text-red-500'>[</span> Y O U Z D O U C <span className=' text-2xl text-red-500'>]</span></div>
                 </div>
@@ -23,9 +51,9 @@ export default function Navbar() {
                 {/* Container des bouttons Projets Competences et Connexion en absolute et de 4px a partir de la droite */}
 
                 <div className='absolute right-4'>
-                    <span className='mr-5'>Projets</span>
-                    <span className='mr-5'>Competences</span>
-                    <span className='mr-5'>Connexion</span>
+                    <button className={focusBtnId == 1 ? focusedBtnStyle : noFocusedBtnStyle} onClick={()=>{btnClickHandler(1)}}>Projets</button>
+                    <button className={focusBtnId == 2 ? focusedBtnStyle : noFocusedBtnStyle} onClick={()=>{btnClickHandler(2)}}>Competences</button>
+                    <button className={focusBtnId == 3 ? focusedBtnStyle : noFocusedBtnStyle} onClick={()=>{btnClickHandler(3)}}>Connexion</button>
 
                 </div>
                 
