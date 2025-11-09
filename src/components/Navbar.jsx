@@ -28,7 +28,7 @@ export default function Navbar() {
 
         //Navigation 
         if(id == 0){
-            navigate("/blank")
+            navigate("/home")
         }else if(id == 1){
             navigate("/blank")
         }else if(id == 2){
