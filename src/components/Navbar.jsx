@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 export default function Navbar() {
+
+
+    //Objet de navigation
+    const navigate = useNavigate();
 
     //Definition d'un state contenant l'id du button avec le focus
     //ID 0 : Logo Portefolio -> Page d'acceuil
@@ -20,6 +25,20 @@ export default function Navbar() {
     const btnClickHandler = (id)=>{
         //MAJ de l'id du bouton ayant le focus
         setFocusBtnId(id)
+
+        //Navigation 
+        if(id == 0){
+            navigate("/blank")
+        }else if(id == 1){
+            navigate("/blank")
+        }else if(id == 2){
+            navigate("/blank")
+        }
+        else if(id == 3){
+            navigate("/connexion")
+        }
+
+
 
 
         
