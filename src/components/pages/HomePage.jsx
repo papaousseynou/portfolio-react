@@ -1,6 +1,6 @@
 import React from 'react'
 import photo01 from "../../assets/photo01.jpg"
-import photo02 from "../../assets/photo02.jpg"
+
 
 
 export default function HomePage() {

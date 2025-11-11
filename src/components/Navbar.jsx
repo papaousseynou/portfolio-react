@@ -33,7 +33,7 @@ export default function Navbar() {
     } else if (id == 1) {
       navigate("/blank");
     } else if (id == 2) {
-      navigate("/blank");
+      navigate("/competences");
     } else if (id == 3) {
       navigate("/connexion");
     }
