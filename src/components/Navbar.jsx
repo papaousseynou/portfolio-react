@@ -15,11 +15,11 @@ export default function Navbar() {
 
   //Definition d'une constante definissant les classename tailwind approprie selon si le boutton est focus ou pas
   const focusedBtnStyle =
-  //  "mr-5 p-3 border border-gray-500 cursor-pointer rounded-lg bg-red-500 text-white ";
+    //  "mr-5 p-3 border border-gray-500 cursor-pointer rounded-lg bg-red-500 text-white ";
     "mr-5 p-3 text-red-600 cursor-pointer font-medium  border-b-2 border-yellow-300 text-white ";
-  
-    const noFocusedBtnStyle =
-//    "mr-5 p-3 border rounded-lg border-gray-500 cursor-pointer hover:bg-red-500 hover:text-white";
+
+  const noFocusedBtnStyle =
+    //    "mr-5 p-3 border rounded-lg border-gray-500 cursor-pointer hover:bg-red-500 hover:text-white";
     "mr-5 p-3 cursor-pointer border-b-2 border-gray-500 hover:border-yellow-300";
 
   //Handler de capture des click sur les buttons du navbar
@@ -44,12 +44,8 @@ export default function Navbar() {
 
     <nav className=" relative flex flex-col items-center justify-center text-white h-20">
       {/* Le contenue du navbar */}
-      
 
       <div className="flex flex-row">
-
-
-       
         {/* Le logo */}
 
         <div
@@ -58,7 +54,9 @@ export default function Navbar() {
             btnClickHandler(0);
           }}
         >
-          <span className="text-lg">P&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;T&nbsp;&nbsp;&nbsp;F&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;L&nbsp;&nbsp;&nbsp;I&nbsp;&nbsp;&nbsp;O</span>
+          <span className="text-base sm:text-lg md:text-xl">
+            P&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;T&nbsp;&nbsp;&nbsp;F&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;L&nbsp;&nbsp;&nbsp;I&nbsp;&nbsp;&nbsp;O
+          </span>
           <div className="mt-1 text-[10px]">
             <span className=" text-sm/2 text-red-500">[</span> Y O U Z D O U C{" "}
             <span className=" text-sm/2 text-red-500">]</span>
@@ -68,7 +66,7 @@ export default function Navbar() {
         {/* Container des bouttons Projets Competences et Connexion en absolute et de 4px a partir de la droite */}
 
         <div className="absolute right-4 text-sm/2">
-         <button
+          <button
             className={focusBtnId == 0 ? focusedBtnStyle : noFocusedBtnStyle}
             onClick={() => {
               btnClickHandler(0);

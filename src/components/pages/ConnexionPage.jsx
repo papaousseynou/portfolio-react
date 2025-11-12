@@ -18,11 +18,12 @@ const ConnexionPage = () => {
   };
 
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-h-screen flex items-center justify-center px-4 py-10 w-1/2">
+    <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
           <h1 className="text-2xl sm:text-3xl text-white">
-            <span className="text-red-500">[</span> C&nbsp;o&nbsp;n&nbsp;n&nbsp;e&nbsp;x&nbsp;i&nbsp;o&nbsp;n{" "}
+            <span className="text-red-500">[</span>{" "}
+            C&nbsp;o&nbsp;n&nbsp;n&nbsp;e&nbsp;x&nbsp;i&nbsp;o&nbsp;n{" "}
             <span className="text-red-500">]</span>
           </h1>
         </div>
