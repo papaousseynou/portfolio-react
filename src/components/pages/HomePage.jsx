@@ -8,26 +8,17 @@ export default function HomePage() {
   return (
     <div>
       <div className="relative w-full pt-10 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
-        {/* <div className='relative'>
-                <div  style={{ backgroundImage: `url(${photo01})` }} className=' mt-10 w-2/3 aspect-[5/3] border border-red-200 rounded-lg shadow-sm  bg-contain bg-center s-40'></div>
-
-                <div className="absolute inset-0 bg-black/40"></div> 
-                <div className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold">
-                    <span className='absolute right-10 text-5xl'>Un petit texte descriptif</span>
-                </div> 
-   
-            </div> */}
-        <div className="relative flex flex-col text-white w-full md:w-1/2">
-          <h1 className="font-[‘Montserrat’,sans-serif] text-5xl leading-tight mt-20">
+        <div className="relative flex flex-col text-white w-full md:w-1/2 max-w-xl">
+          <h1 className="font-[‘Montserrat’,sans-serif] text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-snug sm:leading-tight mt-10 sm:mt-16 md:mt-20">
             Bonjour, nous sommes Y O U Z D O U C,{" "}
           </h1>
-          <div className="text-3xl">
+          <div className="mt-2 text-xl sm:text-2xl md:text-3xl tracking-[0.25em] sm:tracking-[0.35em] whitespace-nowrap">
             <span className="text-red-500">[</span> I N G E G N E U R S
             &nbsp;&nbsp;E N &nbsp;&nbsp;{" "}
             <span className=" text-white bg-red-500">S I</span>&nbsp;
             <span className="text-red-500">]</span>
           </div>
-          <div className="mt-2">
+          <div className="mt-3 text-sm sm:text-base text-gray-200 max-w-xl">
             Deux passionnés de technologie, un même objectif : bâtir l’avenir
             numérique. En tant qu’ingénieurs en Systèmes d’Information, nous
             explorons les univers du développement, de la cybersécurité, de l’IA

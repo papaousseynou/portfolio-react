@@ -98,30 +98,31 @@ export default function Navbar({ sharedState, sharedStateMutator }) {
   return (
     // barre de navigation : definis par deux elements
 
-    <nav className=" relative flex flex-col items-center justify-center text-white h-20">
+    <nav className="relative flex items-center justify-center text-white h-20 px-3 sm:px-4">
       {/* Le contenue du navbar */}
 
-      <div className="flex flex-row">
+      <div className="flex flex-row items-center justify-between w-full max-w-6xl">
         {/* Le logo */}
 
         <div
-          className="flex flex-col items-center cursor-pointer "
+          className="flex flex-col items-start sm:items-center cursor-pointer max-w-[60%] sm:max-w-none"
           onClick={() => {
             btnClickHandler(0);
           }}
         >
-          <span className="text-base sm:text-lg md:text-xl">
-            P&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;T&nbsp;&nbsp;&nbsp;F&nbsp;&nbsp;&nbsp;O&nbsp;&nbsp;&nbsp;L&nbsp;&nbsp;&nbsp;I&nbsp;&nbsp;&nbsp;O
+          <span className="text-sm sm:text-base md:text-lg lg:text-xl tracking-[0.35em] whitespace-nowrap">
+            PORTFOLIO
           </span>
-          <div className="mt-1 text-[10px]">
-            <span className=" text-sm/2 text-red-500">[</span> Y O U Z D O U C{" "}
-            <span className=" text-sm/2 text-red-500">]</span>
+          <div className="mt-1 text-[9px] sm:text-[10px] whitespace-nowrap">
+            <span className="text-red-500 text-[0.7rem] sm:text-xs">[</span> Y O
+            U Z D O U C{" "}
+            <span className="text-red-500 text-[0.7rem] sm:text-xs">]</span>
           </div>
         </div>
 
-        {/* Container des bouttons Projets Competences et Connexion en absolute et de 4px a partir de la droite */}
+        {/* Container des bouttons Projets Competences et Connexion */}
 
-        <div className="absolute right-4 text-sm/2">
+        <div className="flex items-center text-xs sm:text-sm">
           {sharedState.connected && (
             <span className="text-white mr-5 p-3 bg-black border border-yellow-300 font-medium   ">
               {username}
