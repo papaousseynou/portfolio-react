@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 1,
-      "username": "admin",
-      "password": "admin123",
+      "username": "basamba",
+      "password": "doucoure",
       "role": "admin",
       "nom": "Administrateur",
       "email": "admin@portfolio.com"
@@ -18,35 +18,30 @@
     }
   ],
   "competences": [
-    {
+   {
       "id": 1,
       "libelle": "React JS",
-      "description": "Framework JavaScript pour créer des interfaces utilisateur interactives et performantes",
-      "niveau": "Avancé",
-      "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      "categorie": "Frontend",
-      "anneeExperience": 3,
-      "dateAjout": "2024-01-15T10:30:00.000Z"
+      "description":
+        "Développement d’interfaces modernes et performantes avec React et Tailwind CSS.",
+      "niveau": 95,
+      "categorie": "Développement Web",
+      "image": "../../assets/competences/react.jpg"
     },
     {
       "id": 2,
-      "libelle": "Tailwind CSS",
-      "description": "Framework CSS utility-first pour un design rapide et responsive",
-      "niveau": "Intermédiaire",
-      "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
-      "categorie": "Frontend",
-      "anneeExperience": 2,
-      "dateAjout": "2024-02-10T14:20:00.000Z"
+      "libelle": "Node JS",
+      "description": "Création d’API robustes, performantes et sécurisées avec Node.js et Express.",
+      "niveau": 87,
+      "categorie": "Développement Web",
+      "image": "../../assets/competences/node.png"
     },
     {
       "id": 3,
-      "libelle": "Node.js",
-      "description": "Environnement d'exécution JavaScript côté serveur",
-      "niveau": "Intermédiaire",
-      "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-      "categorie": "Backend",
-      "anneeExperience": 2,
-      "dateAjout": "2024-01-20T09:15:00.000Z"
+      "libelle": "Laravel",
+      "description": "Conception d’applications web structurées et évolutives grâce au framework Laravel.",
+      "niveau": 70,
+      "categorie": "Développement Web",
+      "image": "../../assets/competences/laravel.png"
     }
   ],
   "projets": [

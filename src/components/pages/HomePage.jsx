@@ -1,6 +1,14 @@
 import photo01 from "../../assets/photo01.jpg";
+import { useNavigate } from "react-router";
+
 
 export default function HomePage() {
+
+
+    //Objet de navigation
+  const navigate = useNavigate();
+
+
   return (
     <div>
       <div className="relative w-full pt-10 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
@@ -30,30 +38,36 @@ export default function HomePage() {
             et du Big Data pour créer des solutions à la fois intelligentes et
             sûres.
           </div>
-          <div className="hidden md:block absolute left-30 top-100 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  rotate-45 hover:text-red-200">
+          <div className="hidden md:block absolute left-30 top-100 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  rotate-45 ">
             &lt; Dev &gt;
           </div>
-          <div className="hidden md:block absolute top-90 left-80 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  -rotate-40 hover:text-red-200">
+          <div className="hidden md:block absolute top-90 left-80 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  -rotate-40 ">
             &lt; IA &gt;
           </div>
-          <div className="hidden md:block absolute top-120 left-80 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  rotate-0 hover:text-red-200">
+          <div className="hidden md:block absolute top-120 left-80 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  rotate-0 ">
             <span className="text-red-500">&lt;</span> CYBERSECURITE{" "}
             <span className="text-red-500">&gt;</span>
           </div>
-          <div className="hidden md:block absolute top-160 left-0 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  -rotate-40 hover:text-red-200">
+          <div className="hidden md:block absolute top-160 left-0 font-[‘Montserrat’,sans-serif] text-5xl leading-tight  -rotate-40 ">
             &lt; BIG DATA &gt;
           </div>
 
           <div className="mt-6 flex flex-wrap gap-4 md:absolute md:top-160 md:left-100 md:w-[50vw] md:h-30">
             <button
+              onClick={()=>{
+                navigate('/projets')
+              }}
               type="submit"
-              className="ml-0 md:ml-10 w-full sm:w-auto bg-black border-1 border-yellow-300 hover:bg-red-500 text-white font-medium  px-4 py-2.5 transition-colors cursor-pointer"
+              className="ml-0 md:ml-10  bg-black border-1 border-yellow-300 text-white font-medium  w-[20%] h-20 transition-colors cursor-pointer"
             >
               Nos Projets
             </button>
             <button
+              onClick={()=>{
+                navigate('/competences')
+              }}
               type="submit"
-              className="ml-10 w-[10vw] bg-black border-1 border-yellow-300 hover:bg-red-500 text-white font-medium  px-4 py-2.5 transition-colors cursor-pointer"
+              className="ml-0 md:ml-10  bg-black border-1 border-yellow-300 text-white font-medium  w-[20%] h-20 transition-colors cursor-pointer"
             >
               Nos competences
             </button>

@@ -1,8 +1,16 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router";
+import Toast from "../Toast";
 
-const ConnexionPage = () => {
-  const [form, setForm] = useState({ identifiant: "", password: "" });
+
+const ConnexionPage = ( {sharedState, sharedStateMutator} ) => {
+
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [errorLogIn, setErrorLogIn] = useState('')
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -12,10 +20,49 @@ const ConnexionPage = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("Connexion", form);
+    setErrorLogIn("");
+
+    try {
+      // 1. On récupère tous les users du JSON-server
+      const res = await axios.get("http://localhost:3000/users");
+
+      const users = res.data;
+
+      console.log(form)
+      // 2. On cherche si un user correspond au username + password
+      const userFound = users.find(
+        (u) => u.username === form.username && u.password === form.password
+      );
+
+
+      if (!userFound) {
+        setErrorLogIn("Identifiants incorrects !");
+        return;
+      }
+
+      // 3. Si OK, on peut sauvegarder les infos (localStorage par exemple)
+      sharedStateMutator(prev => ({
+        ...prev,
+        connected: true,
+        toast : true,
+        toast_header : 'Authentification réussie',
+        toast_body : 'Nous vous souhaitons la bienvenue ' + userFound.username
+
+      }));
+
+      localStorage.setItem("user", JSON.stringify(userFound));
+
+      console.log("Connecté avec succès :", userFound);
+
+      
+
+    } catch (error) {
+      setErrorLogIn("Erreur lors de la connexion");
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
@@ -32,19 +79,20 @@ const ConnexionPage = () => {
           onSubmit={onSubmit}
           className="bg-white/80 backdrop-blur border border-gray-200 rounded-xl shadow-sm p-6 sm:p-8"
         >
-          <div className="space-y-5">
-            <div>
+          <div className="space-y-5 relative">
+            <div >
+              {errorLogIn && <span className="absolute right-0 text-sm text-white bg-red-500 p-1 ">{errorLogIn}</span>}
               <label
-                htmlFor="identifiant"
+                htmlFor="username"
                 className="block text-sm font-medium mb-1"
               >
                 Identifiant ou e-mail
               </label>
               <input
-                id="identifiant"
-                name="identifiant"
+                id="username"
+                name="username"
                 type="text"
-                value={form.identifiant}
+                value={form.username}
                 onChange={onChange}
                 placeholder="ex: youzdouc@example.com"
                 className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm sm:text-base outline-none focus:ring-2 focus:ring-red-500"
@@ -96,6 +144,11 @@ const ConnexionPage = () => {
           </div>
         </form>
       </div>
+       <div className="absolute bottom-5 right-5 text-white text-sm">
+        Y &nbsp; O &nbsp; U &nbsp; Z &nbsp; D &nbsp; O &nbsp; U &nbsp; C
+        &nbsp;&nbsp;
+        <span className="border-1 border-red-500 rounded-full p-1">TM</span>
+        </div>
     </div>
   );
 };

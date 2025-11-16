@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import photo02 from "../../assets/photo02.jpg";
+import ProjectItem from "../others/ProjectItem";
 
 const ProjectPage = () => {
   const [projets, setProjets] = useState([]);
@@ -46,57 +47,14 @@ const ProjectPage = () => {
         {!loading &&
           !error &&
           projets.map((obj) => (
-            <div
-              key={obj.id}
-              className="relative m-4 sm:m-6 lg:m-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10"
-            >
-              <img
-                src={obj.image}
-                alt={obj.libelle}
-                className="block w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-cover rounded-full border border-gray-200"
-              />
-              <div className="hidden md:block h-full bg-white/50 w-px"></div>
-              <div className="flex flex-col w-full md:flex-1">
-                <span className="text-white font-[‘Montserrat’,sans-serif] text-xl sm:text-2xl lg:text-3xl leading-tight italic ">
-                  {obj.libelle}
-                </span>
-                <p className="mt-3 italic text-sm text-gray-300">
-                  {obj.description}
-                </p>
-                <div className="mt-3 flex flex-row flex-wrap gap-2">
-                  {obj.technologies?.map((t, idx) => (
-                    <span
-                      key={idx}
-                      className="text-xs bg-black rounded-full border border-red-500 text-white px-3 py-1"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-3 flex flex-row flex-wrap gap-3">
-                  {obj.lienGithub && (
-                    <button
-                      type="button"
-                      onClick={() => window.open(obj.lienGithub, "_blank")}
-                      className="bg-black rounded-full border border-red-500 text-white text-sm px-3 py-1.5 transition-colors cursor-pointer"
-                    >
-                      GitHub
-                    </button>
-                  )}
-                  {obj.lienDemo && (
-                    <button
-                      type="button"
-                      onClick={() => window.open(obj.lienDemo, "_blank")}
-                      className="bg-black rounded-full border border-red-500 text-white text-sm px-3 py-1.5 transition-colors cursor-pointer"
-                    >
-                      Démo
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
+            <ProjectItem obj={obj}></ProjectItem>
           ))}
       </div>
+       <div className="absolute bottom-5 right-5 text-white text-sm">
+        Y &nbsp; O &nbsp; U &nbsp; Z &nbsp; D &nbsp; O &nbsp; U &nbsp; C
+        &nbsp;&nbsp;
+        <span className="border-1 border-red-500 rounded-full p-1">TM</span>
+    </div>
     </div>
   );
 };

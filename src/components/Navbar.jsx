@@ -1,7 +1,42 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router";
 
-export default function Navbar() {
+export default function Navbar({sharedState, sharedStateMutator}) {
+
+  //Recuperation des information sur l'utilisateur
+  const [userInfo, setUserInfo] = useState(null)
+
+  //Verifions si le user est loge et constitue un utilisateur admin
+  const [adminCheck, setAdminCheck] = useState(false)
+  const [username, setUsername] = useState('')
+
+  useEffect(()=>{
+    //Si le local storage contient des donnees sur un utilisateur connecte =>
+    if(sharedState.connected){
+       
+      //Mettons a jours le nom de l'utilisateur
+      const userInfo = JSON.parse(localStorage.getItem('user'))
+      setUsername(userInfo.username)
+
+      //Si l'utilisateur connecte est bien l'admin
+      if(userInfo.role == 'admin'){
+        setAdminCheck(true)
+      }else {
+        //Sinon mettons que l'admin ne s'est pas connecte
+
+        setAdminCheck(false)
+       
+
+      }
+    //Sinon mettons que l'admin ne s'est pas connecte
+    }else{
+        setUsername('')
+        setAdminCheck(false)
+
+    }
+  },[sharedState])
+
+
   //Objet de navigation
   const navigate = useNavigate();
 
@@ -10,8 +45,27 @@ export default function Navbar() {
   //ID 1 : Bouton Projets -> Page projet
   //ID 2 : Bouton Competencs -> Page competences
   //ID 3 : Bouton Connexion -> Page d'authentification
+  //ID 4 : Bouton de deconnexion 
+
 
   const [focusBtnId, setFocusBtnId] = useState(0);
+
+  const location = useLocation();
+
+  useEffect(()=>{
+    
+    if(location.pathname == "/" || location.pathname == "/home"){
+      setFocusBtnId(0)
+    }else if(location.pathname == "/projets"){
+      setFocusBtnId(1)
+    }else if(location.pathname == "/competences"){
+      setFocusBtnId(2)
+    }else if(location.pathname == "/connexion"){
+      setFocusBtnId(3)
+    }
+
+  //Pour detecter un changement de route
+  },[location.pathname])
 
   //Definition d'une constante definissant les classename tailwind approprie selon si le boutton est focus ou pas
   const focusedBtnStyle =
@@ -24,18 +78,31 @@ export default function Navbar() {
 
   //Handler de capture des click sur les buttons du navbar
   const btnClickHandler = (id) => {
-    //MAJ de l'id du bouton ayant le focus
-    setFocusBtnId(id);
+    
 
     //Navigation
     if (id == 0) {
       navigate("/home");
     } else if (id == 1) {
-      navigate("/blank");
+      navigate("/projets");
     } else if (id == 2) {
       navigate("/competences");
     } else if (id == 3) {
       navigate("/connexion");
+    }else if (id == 4) {
+      //Supprimons les donnes de l'utilisateur et redigerons a la page d'acceuil
+      localStorage.removeItem('user')
+        
+      setUserInfo(null)
+      sharedStateMutator(prev => ({
+        ...prev,
+        connected: false,
+        toast : true,
+        toast_header : 'Utilisateur déconnecté',
+        toast_body : 'Au revoir' 
+
+      }));
+
     }
   };
 
@@ -66,6 +133,9 @@ export default function Navbar() {
         {/* Container des bouttons Projets Competences et Connexion en absolute et de 4px a partir de la droite */}
 
         <div className="absolute right-4 text-sm/2">
+
+           {sharedState.connected && <span className="text-white mr-5 p-3 bg-black border-1 border-yellow-300 font-medium   ">{ username}</span>}
+
           <button
             className={focusBtnId == 0 ? focusedBtnStyle : noFocusedBtnStyle}
             onClick={() => {
@@ -88,16 +158,29 @@ export default function Navbar() {
               btnClickHandler(2);
             }}
           >
-            Competences
+            Compétences
           </button>
-          <button
+
+            {/* Si l'utilisateur est non authentifie => boutton de connexion */}
+
+          {!sharedState.connected && <button
             className={focusBtnId == 3 ? focusedBtnStyle : noFocusedBtnStyle}
             onClick={() => {
               btnClickHandler(3);
             }}
           >
             Connexion
-          </button>
+          </button>}
+
+            {/* Si l'utilisateur est authentifie => boutton de deconnexion */}
+          {sharedState.connected && <button
+            className={focusBtnId == 4 ? focusedBtnStyle : noFocusedBtnStyle}
+            onClick={() => {
+              btnClickHandler(4);
+            }}
+          >
+            Déconnexion
+          </button>}
         </div>
       </div>
 
