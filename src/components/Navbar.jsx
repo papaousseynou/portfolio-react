@@ -1,41 +1,36 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
-export default function Navbar({sharedState, sharedStateMutator}) {
-
+export default function Navbar({ sharedState, sharedStateMutator }) {
   //Recuperation des information sur l'utilisateur
-  const [userInfo, setUserInfo] = useState(null)
+  const [, setUserInfo] = useState(null);
 
   //Verifions si le user est loge et constitue un utilisateur admin
-  const [adminCheck, setAdminCheck] = useState(false)
-  const [username, setUsername] = useState('')
+  const [, setAdminCheck] = useState(false);
+  const [username, setUsername] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     //Si le local storage contient des donnees sur un utilisateur connecte =>
-    if(sharedState.connected){
-       
+    if (sharedState.connected) {
       //Mettons a jours le nom de l'utilisateur
-      const userInfo = JSON.parse(localStorage.getItem('user'))
-      setUsername(userInfo.username)
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      setUsername(userInfo.username);
 
       //Si l'utilisateur connecte est bien l'admin
-      if(userInfo.role == 'admin'){
-        setAdminCheck(true)
-      }else {
+      if (userInfo.role == "admin") {
+        setAdminCheck(true);
+      } else {
         //Sinon mettons que l'admin ne s'est pas connecte
 
-        setAdminCheck(false)
-       
-
+        setAdminCheck(false);
       }
-    //Sinon mettons que l'admin ne s'est pas connecte
-    }else{
-        setUsername('')
-        setAdminCheck(false)
-
+      //Sinon mettons que l'admin ne s'est pas connecte
+    } else {
+      setUsername("");
+      setAdminCheck(false);
     }
-  },[sharedState])
-
+  }, [sharedState]);
 
   //Objet de navigation
   const navigate = useNavigate();
@@ -45,27 +40,25 @@ export default function Navbar({sharedState, sharedStateMutator}) {
   //ID 1 : Bouton Projets -> Page projet
   //ID 2 : Bouton Competencs -> Page competences
   //ID 3 : Bouton Connexion -> Page d'authentification
-  //ID 4 : Bouton de deconnexion 
-
+  //ID 4 : Bouton de deconnexion
 
   const [focusBtnId, setFocusBtnId] = useState(0);
 
   const location = useLocation();
 
-  useEffect(()=>{
-    
-    if(location.pathname == "/" || location.pathname == "/home"){
-      setFocusBtnId(0)
-    }else if(location.pathname == "/projets"){
-      setFocusBtnId(1)
-    }else if(location.pathname == "/competences"){
-      setFocusBtnId(2)
-    }else if(location.pathname == "/connexion"){
-      setFocusBtnId(3)
+  useEffect(() => {
+    if (location.pathname == "/" || location.pathname == "/home") {
+      setFocusBtnId(0);
+    } else if (location.pathname == "/projets") {
+      setFocusBtnId(1);
+    } else if (location.pathname == "/competences") {
+      setFocusBtnId(2);
+    } else if (location.pathname == "/connexion") {
+      setFocusBtnId(3);
     }
 
-  //Pour detecter un changement de route
-  },[location.pathname])
+    //Pour detecter un changement de route
+  }, [location.pathname]);
 
   //Definition d'une constante definissant les classename tailwind approprie selon si le boutton est focus ou pas
   const focusedBtnStyle =
@@ -78,8 +71,6 @@ export default function Navbar({sharedState, sharedStateMutator}) {
 
   //Handler de capture des click sur les buttons du navbar
   const btnClickHandler = (id) => {
-    
-
     //Navigation
     if (id == 0) {
       navigate("/home");
@@ -89,20 +80,18 @@ export default function Navbar({sharedState, sharedStateMutator}) {
       navigate("/competences");
     } else if (id == 3) {
       navigate("/connexion");
-    }else if (id == 4) {
-      //Supprimons les donnes de l'utilisateur et redigerons a la page d'acceuil
-      localStorage.removeItem('user')
-        
-      setUserInfo(null)
-      sharedStateMutator(prev => ({
+    } else if (id == 4) {
+      //Supprimons les donnes de l'utilisateur et redirigeons à la page d'accueil
+      localStorage.removeItem("user");
+      setUserInfo(null);
+      sharedStateMutator((prev) => ({
         ...prev,
         connected: false,
-        toast : true,
-        toast_header : 'Utilisateur déconnecté',
-        toast_body : 'Au revoir' 
-
+        user: null,
       }));
 
+      toast.info("Vous êtes déconnecté.", { icon: "👋" });
+      navigate("/home");
     }
   };
 
@@ -133,8 +122,11 @@ export default function Navbar({sharedState, sharedStateMutator}) {
         {/* Container des bouttons Projets Competences et Connexion en absolute et de 4px a partir de la droite */}
 
         <div className="absolute right-4 text-sm/2">
-
-           {sharedState.connected && <span className="text-white mr-5 p-3 bg-black border-1 border-yellow-300 font-medium   ">{ username}</span>}
+          {sharedState.connected && (
+            <span className="text-white mr-5 p-3 bg-black border border-yellow-300 font-medium   ">
+              {username}
+            </span>
+          )}
 
           <button
             className={focusBtnId == 0 ? focusedBtnStyle : noFocusedBtnStyle}
@@ -161,26 +153,30 @@ export default function Navbar({sharedState, sharedStateMutator}) {
             Compétences
           </button>
 
-            {/* Si l'utilisateur est non authentifie => boutton de connexion */}
+          {/* Si l'utilisateur est non authentifie => boutton de connexion */}
 
-          {!sharedState.connected && <button
-            className={focusBtnId == 3 ? focusedBtnStyle : noFocusedBtnStyle}
-            onClick={() => {
-              btnClickHandler(3);
-            }}
-          >
-            Connexion
-          </button>}
+          {!sharedState.connected && (
+            <button
+              className={focusBtnId == 3 ? focusedBtnStyle : noFocusedBtnStyle}
+              onClick={() => {
+                btnClickHandler(3);
+              }}
+            >
+              Connexion
+            </button>
+          )}
 
-            {/* Si l'utilisateur est authentifie => boutton de deconnexion */}
-          {sharedState.connected && <button
-            className={focusBtnId == 4 ? focusedBtnStyle : noFocusedBtnStyle}
-            onClick={() => {
-              btnClickHandler(4);
-            }}
-          >
-            Déconnexion
-          </button>}
+          {/* Si l'utilisateur est authentifie => boutton de deconnexion */}
+          {sharedState.connected && (
+            <button
+              className={focusBtnId == 4 ? focusedBtnStyle : noFocusedBtnStyle}
+              onClick={() => {
+                btnClickHandler(4);
+              }}
+            >
+              Déconnexion
+            </button>
+          )}
         </div>
       </div>
 

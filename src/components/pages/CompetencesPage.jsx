@@ -1,28 +1,30 @@
-import photo02 from "../../assets/photo02.jpg";
-import { useState, useEffect } from "react";
+/* eslint-disable no-unused-vars */
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import photo02 from "../../assets/photo02.jpg";
 import CompetenceItem from "../others/CompetenceItem";
 
+export default function CompetencesPage({ sharedState }) {
+  const navigate = useNavigate();
+  const [competences, setCompetences] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-export default function CompetencesPage() {
-    const [competences, setCompetences] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const res = await axios.get("http://localhost:3000/competences");
-          setCompetences(res.data);
-          console.log(competences)
-        } catch (e) {
-          setError("Erreur lors du chargement des competences");
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchData();
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/competences");
+        setCompetences(res.data);
+        console.log(competences);
+      } catch (e) {
+        setError("Erreur lors du chargement des competences");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="text-white">
@@ -41,25 +43,33 @@ export default function CompetencesPage() {
         </div>
       </div>
 
+      {/* Bouton d'accès à l'administration, visible uniquement pour l'admin connecté */}
+      {sharedState?.user?.role === "admin" && (
+        <div className="mt-6 w-full max-w-7xl mx-auto flex justify-end px-4 sm:px-6 lg:px-8">
+          <button
+            type="button"
+            onClick={() => navigate("/admin/competences")}
+            className="inline-flex items-center rounded-full border border-transparent bg-red-600 bg-origin-padding px-4 py-1.5 text-xs sm:text-sm font-medium text-white hover:bg-red-700 hover:ring-2 hover:ring-red-500 transition-colors"
+          >
+            Gérer les compétences
+          </button>
+        </div>
+      )}
+
       <div className="mt-8 sm:mt-10 w-full max-w-7xl mx-auto h-fit border border-gray-200/30 rounded-lg px-4 sm:px-6 lg:px-8">
-        
         {loading && (
           <div className="p-4 text-sm text-gray-300">Chargement...</div>
         )}
         {error && <div className="p-4 text-sm text-red-400">{error}</div>}
         {!loading &&
           !error &&
-          competences.map((obj) => (
-            <CompetenceItem obj = {obj}></CompetenceItem>
-        ))}
+          competences.map((obj) => <CompetenceItem obj={obj}></CompetenceItem>)}
       </div>
-       <div className="absolute bottom-5 right-5 text-white text-sm">
+      <div className="absolute bottom-5 right-5 text-white text-sm">
         Y &nbsp; O &nbsp; U &nbsp; Z &nbsp; D &nbsp; O &nbsp; U &nbsp; C
         &nbsp;&nbsp;
-        <span className="border-1 border-red-500 rounded-full p-1">TM</span>
-       </div>
+        <span className="border border-red-500 rounded-full p-1">TM</span>
+      </div>
     </div>
-
-   
   );
 }

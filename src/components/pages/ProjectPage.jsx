@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import photo02 from "../../assets/photo02.jpg";
 import ProjectItem from "../others/ProjectItem";
 
-const ProjectPage = () => {
+const ProjectPage = ({ sharedState }) => {
+  const navigate = useNavigate();
   const [projets, setProjets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,6 +41,19 @@ const ProjectPage = () => {
         </div>
       </div>
 
+      {/* Bouton d'accès à l'administration, visible uniquement pour l'admin connecté */}
+      {sharedState?.user?.role === "admin" && (
+        <div className="mt-6 w-full flex justify-end">
+          <button
+            type="button"
+            onClick={() => navigate("/admin/projets")}
+            className="inline-flex items-center rounded-full border border-red-400 bg-black/70 px-4 py-1.5 text-xs sm:text-sm font-medium text-white hover:bg-red-600 hover:border-red-500 transition-colors"
+          >
+            Gérer les projets
+          </button>
+        </div>
+      )}
+
       <div className="mt-8 sm:mt-10 w-full h-fit border border-gray-200/30 rounded-lg">
         {loading && (
           <div className="p-4 text-sm text-gray-300">Chargement...</div>
@@ -46,15 +61,13 @@ const ProjectPage = () => {
         {error && <div className="p-4 text-sm text-red-400">{error}</div>}
         {!loading &&
           !error &&
-          projets.map((obj) => (
-            <ProjectItem obj={obj}></ProjectItem>
-          ))}
+          projets.map((obj) => <ProjectItem obj={obj}></ProjectItem>)}
       </div>
-       <div className="absolute bottom-5 right-5 text-white text-sm">
+      <div className="absolute bottom-5 right-5 text-white text-sm">
         Y &nbsp; O &nbsp; U &nbsp; Z &nbsp; D &nbsp; O &nbsp; U &nbsp; C
         &nbsp;&nbsp;
         <span className="border-1 border-red-500 rounded-full p-1">TM</span>
-    </div>
+      </div>
     </div>
   );
 };

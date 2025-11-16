@@ -1,16 +1,14 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import Toast from "../Toast";
+import { toast } from "react-toastify";
 
-
-const ConnexionPage = ( {sharedState, sharedStateMutator} ) => {
-
+const ConnexionPage = (sharedStateMutator) => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [errorLogIn, setErrorLogIn] = useState('')
+  const [errorLogIn, setErrorLogIn] = useState("");
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -30,12 +28,11 @@ const ConnexionPage = ( {sharedState, sharedStateMutator} ) => {
 
       const users = res.data;
 
-      console.log(form)
+      console.log(form);
       // 2. On cherche si un user correspond au username + password
       const userFound = users.find(
         (u) => u.username === form.username && u.password === form.password
       );
-
 
       if (!userFound) {
         setErrorLogIn("Identifiants incorrects !");
@@ -43,26 +40,34 @@ const ConnexionPage = ( {sharedState, sharedStateMutator} ) => {
       }
 
       // 3. Si OK, on peut sauvegarder les infos (localStorage par exemple)
-      sharedStateMutator(prev => ({
+      sharedStateMutator((prev) => ({
         ...prev,
         connected: true,
-        toast : true,
-        toast_header : 'Authentification réussie',
-        toast_body : 'Nous vous souhaitons la bienvenue ' + userFound.username
-
+        user: {
+          id: userFound.id,
+          username: userFound.username,
+          role: userFound.role,
+          nom: userFound.nom,
+          email: userFound.email,
+        },
       }));
+
+      toast.success(`Bienvenue ${userFound.username}`);
 
       localStorage.setItem("user", JSON.stringify(userFound));
 
       console.log("Connecté avec succès :", userFound);
 
-      
-
+      if (userFound.role === "admin") {
+        navigate("/admin/competences");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       setErrorLogIn("Erreur lors de la connexion");
+      toast.error("Erreur lors de la connexion", error);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
@@ -80,8 +85,12 @@ const ConnexionPage = ( {sharedState, sharedStateMutator} ) => {
           className="bg-white/80 backdrop-blur border border-gray-200 rounded-xl shadow-sm p-6 sm:p-8"
         >
           <div className="space-y-5 relative">
-            <div >
-              {errorLogIn && <span className="absolute right-0 text-sm text-white bg-red-500 p-1 ">{errorLogIn}</span>}
+            <div>
+              {errorLogIn && (
+                <span className="absolute right-0 text-sm text-white bg-red-500 p-1 ">
+                  {errorLogIn}
+                </span>
+              )}
               <label
                 htmlFor="username"
                 className="block text-sm font-medium mb-1"
@@ -144,11 +153,11 @@ const ConnexionPage = ( {sharedState, sharedStateMutator} ) => {
           </div>
         </form>
       </div>
-       <div className="absolute bottom-5 right-5 text-white text-sm">
+      <div className="absolute bottom-5 right-5 text-white text-sm">
         Y &nbsp; O &nbsp; U &nbsp; Z &nbsp; D &nbsp; O &nbsp; U &nbsp; C
         &nbsp;&nbsp;
-        <span className="border-1 border-red-500 rounded-full p-1">TM</span>
-        </div>
+        <span className="border border-red-500 rounded-full p-1">TM</span>
+      </div>
     </div>
   );
 };
