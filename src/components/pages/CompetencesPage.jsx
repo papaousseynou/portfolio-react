@@ -63,7 +63,9 @@ export default function CompetencesPage({ sharedState }) {
         {error && <div className="p-4 text-sm text-red-400">{error}</div>}
         {!loading &&
           !error &&
-          competences.map((obj) => <CompetenceItem obj={obj}></CompetenceItem>)}
+          competences.map((obj) => (
+            <CompetenceItem key={obj.id} obj={obj}></CompetenceItem>
+          ))}
       </div>
       <div className="absolute bottom-5 right-5 text-white text-sm">
         Y &nbsp; O &nbsp; U &nbsp; Z &nbsp; D &nbsp; O &nbsp; U &nbsp; C

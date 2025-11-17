@@ -49,6 +49,14 @@
       "niveau": 60,
       "categorie": "Developpement web",
       "image": "https://www.drupal.org/files/project-images/nextjs-icon-dark-background.png"
+    },
+    {
+      "libelle": "Nestjs",
+      "description": "Nestjs est un framework de nodejs.",
+      "niveau": 40,
+      "categorie": "Dev web",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/NestJS.svg",
+      "id": "8bf7"
     }
   ],
   "projets": [
@@ -114,7 +122,7 @@
     },
     {
       "libelle": "Gestionnaire de budget",
-      "description": "",
+      "description": "Cette application permettra à l'utilisateur de gérer son budget",
       "technologies": [
         "React native",
         "nestjs"
