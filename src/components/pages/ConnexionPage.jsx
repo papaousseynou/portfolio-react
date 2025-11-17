@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-const ConnexionPage = (sharedStateMutator) => {
+const ConnexionPage = ({sharedState, sharedStateMutator}) => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ username: "", password: "" });
