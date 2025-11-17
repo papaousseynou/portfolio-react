@@ -3,9 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-const ConnexionPage = (sharedStateMutator) => {
+const ConnexionPage = ({ sharedState, sharedStateMutator }) => {
   const navigate = useNavigate();
-
   const [form, setForm] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [errorLogIn, setErrorLogIn] = useState("");
@@ -27,15 +26,11 @@ const ConnexionPage = (sharedStateMutator) => {
       const res = await axios.get("http://localhost:3000/users");
 
       const users = res.data;
-      // console.log("USERS FROM API", users);
-      // console.log("FORM VALUES", form);
-      // console.log(form);
+
+      console.log(form);
       // 2. On cherche si un user correspond au username + password
       const userFound = users.find(
-        (u) =>
-          u.username.toLowerCase().trim() ===
-            form.username.toLowerCase().trim() &&
-          u.password === form.password.trim()
+        (u) => u.username === form.username && u.password === form.password
       );
 
       if (!userFound) {
